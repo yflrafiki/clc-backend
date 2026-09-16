@@ -5,6 +5,9 @@ require('../src/models/Member');
 require('../src/models/Tithe');
 require('../src/models/Attendance');
 require('../src/models/WelfareContribution');
+require('../src/models/Offering');
+require('../src/models/ReportLog');
+require('../src/models/BankReceipt');
 
 (async () => {
   try {
