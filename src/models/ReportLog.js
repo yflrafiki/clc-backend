@@ -9,7 +9,12 @@ const ReportLog = sequelize.define('ReportLog', {
   },
 
   category: {
-    type: DataTypes.ENUM('Tithe', 'Welfare', 'Offering', 'Attendance', 'General'),
+    type: DataTypes.ENUM(
+      'Tithe', 'Welfare', 'Offering', 'Attendance',
+      'Choir', 'Media', 'Ushers', 'Women Ministries',
+      'Men Ministries', 'Children Ministries', 'Youth',
+      'Instrumentalist', 'General'
+    ),
     allowNull: false,
     defaultValue: 'General'
   },

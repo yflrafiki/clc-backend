@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const { getFinancialSummary, getReceipts, uploadReceipt } = require('../controllers/accountController');
 const auth = require('../middleware/authMiddleware');
+const role = require('../middleware/roleMiddleware');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, path.join(__dirname, '..', '..', 'uploads', 'receipts')),
@@ -24,8 +25,8 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 }
 });
 
-router.get('/summary', auth, getFinancialSummary);
-router.get('/receipts', auth, getReceipts);
-router.post('/receipts', auth, upload.single('receipt_image'), uploadReceipt);
+router.get('/summary', auth, role(1, 3), getFinancialSummary);
+router.get('/receipts', auth, role(1, 3), getReceipts);
+router.post('/receipts', auth, role(3), upload.single('receipt_image'), uploadReceipt);
 
 module.exports = router;

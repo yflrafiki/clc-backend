@@ -24,6 +24,15 @@ const getDashboardStats = async (req, res) => {
       FROM welfare_contributions
     `);
 
+    const [offerings] = await sequelize.query(`
+      SELECT type, COALESCE(SUM(amount), 0)::float AS total
+      FROM offerings
+      GROUP BY type
+    `);
+
+    const offeringMap = {};
+    offerings.forEach(o => { offeringMap[o.type] = o.total; });
+
     const [monthly] = await sequelize.query(`
       SELECT
         TO_CHAR(months.month, 'Mon') AS name,
@@ -52,6 +61,9 @@ const getDashboardStats = async (req, res) => {
       weekly_attendance: attendance.total,
       total_tithes: tithes.total,
       total_welfare: welfare.total,
+      total_offering: offeringMap['Offering'] || 0,
+      total_donation: offeringMap['Donation'] || 0,
+      total_seed: offeringMap['Seed'] || 0,
       monthly
     });
 
