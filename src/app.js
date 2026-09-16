@@ -19,17 +19,29 @@ const app = express();
 // Security headers
 app.use(helmet());
 
-// CORS — restrict to frontend origin in production
-const allowedOrigins = process.env.FRONTEND_URL
-  ? [process.env.FRONTEND_URL]
-  : ['http://localhost:5173'];
+// CORS — allow the live Netlify origins and local dev frontend while normalizing trailing slashes
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'https://lifeway-church.netlify.app',
+  'https://christian-life-way.netlify.app',
+  ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : []),
+].map((value) => value && value.replace(/\/$/, ''));
 
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+    if (!origin) return callback(null, true);
+
+    const normalizedOrigin = origin.replace(/\/$/, '');
+    if (allowedOrigins.includes(normalizedOrigin)) {
+      return callback(null, true);
+    }
+
     callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 app.use(express.json({ limit: '10mb' }));
