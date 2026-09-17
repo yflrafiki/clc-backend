@@ -9,6 +9,11 @@ const Offering = sequelize.define('Offering', {
     defaultValue: 'Offering'
   },
 
+  member_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
+
   amount: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false
