@@ -49,13 +49,14 @@ app.use(express.json({ limit: '10mb' }));
 // Serve uploaded receipts
 app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
-// Rate limit auth routes — 10 attempts per 15 minutes
+// Rate limit auth routes to avoid repeated lockouts while keeping legitimate retries workable.
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 10,
-  message: { message: 'Too many login attempts. Please try again later.' },
+  max: 60,
+  skipSuccessfulRequests: true,
   standardHeaders: true,
   legacyHeaders: false,
+  message: { message: 'Too many login attempts. Please try again later.' },
 });
 
 app.use('/api/auth', authLimiter, authRoutes);
