@@ -3,10 +3,9 @@ const router = express.Router();
 const { getReports, getMemberReport, getMemberReportBySearch, createReport } = require('../controllers/reportController');
 const auth = require('../middleware/authMiddleware');
 const role = require('../middleware/roleMiddleware');
-const { sendWeeklyAttendanceReport } = require('../controllers/weeklyReportController');
+const { getWeeklyAttendanceReport } = require('../controllers/weeklyReportController');
 
-// Weekly Sunday attendance email, protected by CRON_SECRET instead of a login
-router.post('/weekly-attendance/send', sendWeeklyAttendanceReport);
+router.get('/weekly-attendance', auth, role(1), getWeeklyAttendanceReport);
 
 router.get('/', auth, role(1), getReports);
 router.get('/member-search', auth, role(1, 2, 3), getMemberReportBySearch);
