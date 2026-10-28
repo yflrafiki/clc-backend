@@ -1,0 +1,16 @@
+<!-- EmailJS template for the weekly attendance report.
+     Subject: Sunday attendance, {{report_date}}: {{members_present}} members, {{visitors}} visitors
+     To Email: {{to_email}}
+     The triple braces in {{{report_html}}} are required so the report's tables show as tables. -->
+<div style="margin:0;padding:24px 12px;background:#f5efe7;font-family:Arial,Helvetica,sans-serif;color:#1f2d3d;">
+  <div style="max-width:620px;margin:0 auto;background:#ffffff;border:1px solid #e7d9bd;border-radius:18px;overflow:hidden;">
+    <div style="background:#1f2d3d;padding:24px;">
+      <p style="margin:0;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#e7d8bf;">{{church_name}} · Weekly report</p>
+      <h1 style="margin:6px 0 0;font-family:Georgia,serif;font-size:26px;font-weight:normal;color:#ffffff;">Sunday attendance</h1>
+      <p style="margin:4px 0 0;font-size:14px;color:#e7d8bf;">{{report_date}}</p>
+    </div>
+    <div style="padding:20px 18px;">
+      {{{report_html}}}
+    </div>
+  </div>
+</div>
