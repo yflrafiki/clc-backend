@@ -13,6 +13,21 @@ const Attendance = sequelize.define('Attendance', {
     allowNull: false
   },
 
+  service: {
+    type: DataTypes.STRING
+  },
+
+  // 'qr' when the member scanned and checked themselves in, 'front_desk' when staff marked them
+  check_in_method: {
+    type: DataTypes.STRING,
+    defaultValue: 'front_desk'
+  },
+
+  checked_in_at: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
+  },
+
   attendance_status: {
     type: DataTypes.BOOLEAN,
     defaultValue: true

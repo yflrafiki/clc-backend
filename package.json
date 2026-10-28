@@ -8,6 +8,7 @@
     "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "db:sync": "node scripts/syncDb.js",
+    "db:migrate-checkin": "node scripts/migrateCheckIn.js",
     "seed": "node scripts/seedAccounts.js",
     "account:add": "node scripts/addAccount.js",
     "account:delete": "node scripts/deleteAccount.js",
